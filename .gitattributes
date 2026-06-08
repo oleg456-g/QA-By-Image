@@ -1,0 +1,2 @@
+embeddings/*.pt filter=lfs diff=lfs merge=lfs -text
+best_heavy_vqa_model.pth filter=lfs diff=lfs merge=lfs -text
