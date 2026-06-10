@@ -11,20 +11,20 @@ def main():
     print("1. Чтение сырых файлов...")
     with open(questions_json_path, 'r', encoding='utf-8') as f:
         questions_list = json.load(f)['questions']
-        
     with open(annotations_json_path, 'r', encoding='utf-8') as f:
         annotations_list = json.load(f)['annotations']
         
-    print("2. Создание хэш-карты аннотаций для быстрого поиска...")
+    print("2. Создание словаря...")
     annotations_dict = {
         ann['question_id']: {
             'multiple_choice_answer': ann['multiple_choice_answer'],
-            'answer_type': ann['answer_type']
+            'answer_type': ann['answer_type'],
+            'all_answers': [a['answer'] for a in ann['answers']]
         }
         for ann in annotations_list
     }
     
-    print("3. Склеивание данных и генерация путей к изображениям...")
+    print("3. Склеивание данных...")
     preprocessed_data = []
     
     for q in tqdm(questions_list):
@@ -39,14 +39,15 @@ def main():
                 'image_path': image_path,
                 'question': q['question'],
                 'answer': annotations_dict[q_id]['multiple_choice_answer'],
-                'answer_type': annotations_dict[q_id]['answer_type']
+                'answer_type': annotations_dict[q_id]['answer_type'],
+                'all_answers': annotations_dict[q_id]['all_answers']
             })
             
-    print(f"4. Сохранение склеенного датасета в {output_json_path}...")
+    print(f"4. Сохранение датасета в {output_json_path}...")
     with open(output_json_path, 'w', encoding='utf-8') as f:
         json.dump(preprocessed_data, f, ensure_ascii=False, indent=2)
         
-    print(f"Готово! Создан единый файл датасета на {len(preprocessed_data)} записей.")
+    print("Готово!")
 
 if __name__ == "__main__":
     main()

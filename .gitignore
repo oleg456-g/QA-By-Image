@@ -1,7 +1,6 @@
 /val2014
-/embeddings
-/v2_mscoco_val2014_annotations.json
-/v2_OpenEnded_mscoco_val2014_questions.json
 /vqa_transformer_colab.pth
-/best_heavy_vqa_model.pth
+/embeddings
+/ans2idx.json
 /vqa_val2014_preprocessed.json
+/__pycache__
