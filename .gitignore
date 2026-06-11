@@ -5,3 +5,4 @@
 /vqa_val2014_preprocessed.json
 /__pycache__
 *.pth
+question.wav
